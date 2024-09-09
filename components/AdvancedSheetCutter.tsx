@@ -38,18 +38,18 @@ let nextId = 1
 const AdvancedSheetCutter: React.FC = () => {
   const [sheetWidth, setSheetWidth] = useState<number>(100)
   const [sheetHeight, setSheetHeight] = useState<number>(100)
-  const [pieceWidth, setPieceWidth] = useState<number>(null)
-  const [pieceHeight, setPieceHeight] = useState<number>(null)
+  const [pieceWidth, setPieceWidth] = useState<number | undefined>(undefined)
+  const [pieceHeight, setPieceHeight] = useState<number | undefined>(undefined)
   const [pieces, { push: addPiece, removeAt: removePiece, reset: resetPieces }] = useList<Piece>([])
   const [cuts, setCuts] = useState<Cut[]>([])
   const [error, setError] = useState<string | null>(null)
   const [unit, setUnit] = useState<Unit>('cm')
 
   const addPieceHandler = useCallback(() => {
-    if (pieceWidth > 0 && pieceHeight > 0) {
+    if (pieceWidth && pieceHeight && pieceWidth > 0 && pieceHeight > 0) {
       addPiece({ width: pieceWidth, height: pieceHeight, id: nextId++ })
-      setPieceWidth(null)
-      setPieceHeight(null)
+      setPieceWidth(undefined)
+      setPieceHeight(undefined)
     }
   }, [pieceWidth, pieceHeight, addPiece])
 
